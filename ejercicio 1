@@ -1,0 +1,61 @@
+PREGUNTA 1-EJERCICIO 1
+----------------------------------------------------------------
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+
+# Definir la variable y la función
+x = sp.symbols("x")
+y = sp.Function("y")(x)
+
+# Definición de parámetros
+m = 9  # kg
+b = 4  # Ns/m
+k = 3  # N/m
+fuerzaExterna = sp.cos(3*x)
+
+# Ecuación diferencial
+edo=sp.Eq(m*y.diff(x,2)+b*y.diff(x)+k*y,fuerzaExterna)
+
+# Resolvemos la EDO
+solucion=sp.dsolve(edo,y)
+
+# Mostrar la solución general
+print("La solución general es:")
+sp.pprint(solucion)
+
+# Para obtener la solución particular, definimos las condiciones iniciales
+C1,C2 = sp.symbols("C1,C2")
+general_solution=solucion.rhs
+initial_conditions=[
+    general_solution.subs(x,0).expand()-(-2),  # y(0) = -2
+    general_solution.diff(x).subs(x,0).expand()-8  # y'(0) = 8
+]
+
+# Resolviendo las condiciones iniciales
+constantes=sp.solve(initial_conditions, (C1,C2))
+particular_solucion=general_solution.subs(constantes)
+
+# Mostrar la solución particular
+print("\nLa solución particular es:")
+sp.pprint(particular_solucion)
+
+# Graficar la solución
+# Definir la función para graficar
+y_func = sp.lambdify(x, particular_solucion, 'numpy')
+
+# Crear un rango de tiempo
+time = np.linspace(0, 10, 100)
+y_values = y_func(time)
+
+# Graficar
+plt.figure(figsize=(10, 5))
+plt.plot(time, y_values, label="y(t)", color="salmon")
+plt.title("Movimiento del sistema masa-resorte-amortiguador")
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Posición (m)")
+plt.axhline(0, color='blue', lw=0.5, ls='--')
+plt.axvline(0, color='blue', lw=0.5, ls='--')
+plt.grid(True)
+plt.legend()
+plt.show()
