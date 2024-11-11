@@ -1,0 +1,30 @@
+#SEGUNDA PREGUNTA- EJERCICIO 2
+
+----------------------------------------------------------------------------------------------------------------------------
+import sympy as sp
+
+# Definir la variable y la función
+x = sp.symbols('x')
+y = sp.Function('y')(x)
+
+# Ecuación diferencial
+rhs=(3/5)*sp.cos(6*x)+2*x**3+x+8
+ode=sp.Eq(3*y.diff(x,2)+7*y.diff(x) + 6 * y, rhs)
+
+# Resolver la EDO
+solution = sp.dsolve(ode, y)
+
+# Redondear los coeficientes en la solución
+solution_rounded = solution.rhs.expand()
+
+# Convertir la solución a una cadena y redondear números a 3 decimales
+def round_coefficients(expr,decimals):
+    return expr.evalf(decimals)
+
+# Aplicar redondeo a la solución
+rounded_solution = round_coefficients(solution_rounded, 3)
+
+# Mostrar la solución general de manera compacta
+sol_text = str(rounded_solution).replace('Function', '').replace('y', 'y(x)').replace(' ', '')
+print("La solución general de la EDO es:")
+print(sol_text)
