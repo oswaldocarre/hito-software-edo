@@ -1,5 +1,5 @@
-PREGUNTA 1-EJERCICIO 1
-----------------------------------------------------------------
+#PREGUNTA 1-EJERCICIO 1
+#----------------------------------------------------------------
 import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
