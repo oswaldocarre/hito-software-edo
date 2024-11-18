@@ -1,6 +1,4 @@
 #SEGUNDA PREGUNTA- EJERCICIO 2
-
-----------------------------------------------------------------------------------------------------------------------------
 import sympy as sp
 
 # Definir la variable y la función
